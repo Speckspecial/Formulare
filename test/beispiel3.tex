@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\usepackage[unicode]{hyperref}
+\usepackage{ocgx2}      % erzeugt OCG-Layer in LaTeX
+\usepackage{eforms}     % Buttons
+\usepackage{insdljs}    % eingebettetes JavaScript
+
+\begin{insDLJS}[toggleOCG]{toggleOCG}{}
+function toggleOCGByName(layerName) {
+    var ocgs = this.getOCGs();
+    if (!ocgs) return;
+
+    for (var i = 0; i < ocgs.length; i++) {
+        ocgs[i].state = !ocgs[i].state;
+    }
+}
+\end{insDLJS}
+
+\begin{document}
+
+\section*{Sektions-Steuerung}
+
+%            if (ocgs[i].name == "Sektion 1") ocgs[i].state = (event.target.value == "s1");
+%            if (ocgs[i].name == "Sektion 2") ocgs[i].state = (event.target.value == "s2");
+
+% Radiobuttons definieren (in einer Gruppe, "sectgroup")
+% Die "1" am Ende ist der initial sichtbare Layer.
+
+\begin{center}
+\PushButton[
+  name=btnToggleLayer,
+  onclick={toggleOCGByName("Layer 1");}
+]{Layer 1 ein-/ausblenden}
+\end{center}
+
+\CheckBox[name=cb, keystroke={
+    toggleOCGByName("layerone");
+}]{Eingabefeld anzeigen}
+\ChoiceMenu[radio,name=sectgroup,
+keystroke={
+    var ocgs = this.getOCGs();
+    for (var i=0; i < ocgs.length; i++) {
+        ocgs[i].state = !ocgs[i].state;
+    }
+}]{}{Sektion 1=s1, Sektion 2=s2}
+
+\vspace{1cm}
+
+% Sektion 1 (anfänglich sichtbar, daher 3. Argument {1})
+\begin{ocg}{Sektion 1}{s1}{0}
+    \section{Inhalt von Sektion 1}
+    Dies ist der Text von Sektion 1, der ein- und ausgeblendet wird.
+\end{ocg}
+
+% Sektion 2 (anfänglich unsichtbar, daher 3. Argument {0})
+\begin{ocg}{Sektion 2}{s2}{0}
+    \section{Inhalt von Sektion 2}
+    Dies ist der Text von Sektion 2.
+\end{ocg}
+
+% only needed to get the Javascript running
+%\switchocg{s1}{S1}
+%\switchocg{s2}{S2}
+
+\end{document}

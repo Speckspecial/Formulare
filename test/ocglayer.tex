@@ -1,0 +1,50 @@
+\documentclass[a4paper]{article}
+
+\usepackage[unicode]{hyperref}
+\usepackage{ocgx2}      % erzeugt OCG-Layer in LaTeX
+\usepackage{eforms}     % Buttons
+\usepackage{insdljs}    % eingebettetes JavaScript
+
+% ---------------------------------------------------------
+% Dokumentweites JavaScript zum Umschalten eines OCG
+% ---------------------------------------------------------
+\begin{insDLJS}[toggleOCG]{toggleOCG}{}
+function toggleOCGByName(layerName) {
+    var ocgs = this.getOCGs();
+    if (!ocgs) return;
+
+    for (var i = 0; i < ocgs.length; i++) {
+        ocgs[i].state = !ocgs[i].state;
+    }
+}
+\end{insDLJS}
+
+\begin{document}
+
+Beispiel: OCG‑Layer + JavaScript‑Toggle
+
+Der folgende Text gehört zu einem **OCG‑Layer**, der mit *ocgx2* erzeugt wird.
+
+---
+
+Inhalt im Layer *Layer 1*
+
+\begin{ocg}{Layer 1}{layerone}{true}
+\textbf{Dies ist Inhalt im OCG Layer 1.}
+Er wird per Button ein‑ und ausgeblendet.
+\end{ocg}
+
+---
+
+Button zum Umschalten
+
+\begin{center}
+\PushButton[
+  name=btnToggleLayer,
+  onclick={toggleOCGByName("Layer 1");}
+]{Layer 1 ein-/ausblenden}
+\end{center}
+
+\switchocg{layerone}{}
+
+\end{document}

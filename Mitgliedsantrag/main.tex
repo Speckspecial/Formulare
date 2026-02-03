@@ -1,0 +1,128 @@
+\documentclass[a4paper, 10pt]{article}
+\pdfminorversion=7
+
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{setspace}
+\usepackage{makecell}
+\usepackage[unicode]{hyperref}
+\usepackage{xcolor}
+\usepackage{ocgx2}      % erzeugt OCG-Layer in LaTeX
+\usepackage{eforms}     
+\usepackage{insdljs}    % eingebettetes JavaScript
+
+\definecolor{svoblau}{RGB}{24,47,149}
+
+\begin{insDLJS}[toggleOCG]{toggleOCG}{}
+function toggleOCGByName(layerName) {
+    var ocgs = this.getOCGs();
+    if (!ocgs) return;
+
+    for (var i = 0; i < ocgs.length; i++) {
+        ocgs[i].state = !ocgs[i].state;
+    }
+}
+\end{insDLJS}
+
+
+% ---------------------------------------------------------
+% Logo oben rechts
+% ---------------------------------------------------------
+\pretitle{%
+  \begin{flushleft}
+    \vspace*{-2cm}
+    \begin{minipage}{0.7\textwidth}
+}
+\posttitle{%
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.25\textwidth}
+      \raggedleft
+      \includegraphics[width=\linewidth]{SVO Logo 2019.jpg} % <-- Dein Logo hier
+    \end{minipage}
+  \end{flushleft}
+  \vspace{1ex}
+}
+
+% ---------------------------------------------------------
+% Dokument
+% ---------------------------------------------------------
+\title{\Huge\bfseries\textcolor{svoblau}{SV~1919~Osterburken~e.V.}
+\\[1ex]\Large AUFNAHMEANTRAG \hfill (Stand 02/2026)
+}
+\author{} % kein Autor
+\date{}   % kein Datum
+
+\begin{document}
+
+\maketitle
+
+\section*{Antragsteller/-in}
+
+Hiermit beantrage ich die Mitgliedschaft beim SV~1919~Osterburken~e.V..
+\\[1ex]
+\noindent
+\begin{tabular}{@{}l l@{}}
+\makecell[cl]{Eintrittsdatum:} & 
+\makecell[cl]{\TextField[name=txtEintrittsdatum, 
+  format={AFDate_FormatEx("dd.mm.yyyy");}, 
+  keystroke={AFDate_KeystrokeEx("dd.mm.yyyy");}, 
+  bordercolor={0 0 0},
+  height=0.7cm
+]{}}
+\end{tabular}
+\\[1ex]
+\noindent
+\begin{tabular}{@{}l l@{}}
+\ChoiceMenu[name=radioMitgliedschaft, radio, radiosymbol=\ding{55}, onclick={this.getField("Einzelmitglied").display = display.visible;}, bordercolor={0 0 0}]{}{=EinzelErwachsener} & 
+Mitgliedschaft für mich \\
+\ChoiceMenu[name=radioMitgliedschaft, radio, radiosymbol=\ding{55}, onclick={this.getField("Einzelmitglied").display = display.hidden;}, bordercolor={0 0 0}]{}{=EinzelKind} & 
+Mitgliedschaft für mein Kind (Antragsteller/-in ist erziehungsberechtigt.)\\
+\ChoiceMenu[name=radioMitgliedschaft, radio, radiosymbol=\ding{55}, onclick={this.getField("Einzelmitglied").display = display.hidden;}, bordercolor={0 0 0}]{}{=Familie} & 
+Familienmitgliedschaft für mich, Partner/Partnerin und Kinder \\
+\end{tabular}
+
+\subsection*{Antragsteller/Antragstellerin}
+
+\noindent
+\begin{tabular}{@{}p{2.5cm} @{}l}
+\makecell[cl]{Vorname:} & 
+\makecell[cl]{\TextField[
+    name=txtAntragstellerVorname,
+    bordercolor={0 0 0}, 
+    width=10cm, height=0.7cm
+  ]{}
+} \\[3ex]
+\makecell[cl]{Nachname:} & 
+\makecell[cl]{\TextField[
+    name=txtAntragstellerNachname, 
+    bordercolor={0 0 0}, 
+    width=10cm, height=0.7cm
+  ]{}
+} \\[3ex]
+\makecell[cl]{Geburtsdatum:} &
+\makecell[cl]{\TextField[
+    name=txtAntragstellerGeburtsdatum, 
+    format={AFDate_FormatEx("dd.mm.yyyy");}, 
+    keystroke={AFDate_KeystrokeEx("dd.mm.yyyy");}, 
+    bordercolor={0 0 0},
+    height=0.7cm
+  ]{}
+} \\
+\end{tabular}
+\\[1ex]
+\noindent
+\begin{tabular}{@{}p{2.5cm} @{}l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l}
+\makecell[cl]{Geschlecht:} & 
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=m}} &
+\makecell[cl]{männlich} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=w}} &
+\makecell[cl]{weiblich} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=d}} &
+\makecell[cl]{divers} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=u}} &
+\makecell[cl]{keine Angabe}
+\end{tabular}
+
+\end{document}

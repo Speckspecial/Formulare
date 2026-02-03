@@ -1,0 +1,73 @@
+## Core LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.nav
+*.snm
+*.vrb
+
+## Intermediate files
+*.dvi
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.ilg
+*.ind
+*.idx
+*.glo
+*.gls
+*.ist
+
+## PDF and other outputs
+*.pdf
+*.ps
+*.eps
+
+## Temporary editor files
+*~
+*.swp
+*.bak
+*.tmp
+
+## Latexmk specific
+latexmkrc
+
+## TikZ / PGF externalization
+*.dpth
+*.md5
+*.auxlock
+
+## Beamer
+*.nav
+*.snm
+
+## Glossaries
+*.acn
+*.acr
+*.alg
+*.glg
+*.gls
+*.glsdefs
+
+## Minted (code highlighting)
+_minted*
+*.pyg
+
+## MetaPost
+*.mp
+*.mpx
+
+## Arara
+*.arara
+
+## Other tools
+*.xdv
+*.xdy

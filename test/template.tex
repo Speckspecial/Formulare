@@ -1,0 +1,91 @@
+\documentclass{article}
+\usepackage[unicode]{hyperref}
+\listfiles
+
+\begin{document}
+
+\section*{Steuerung der Sections}
+
+% --- Buttons für Section A ---
+\textbf{Section A steuern:}\par
+\PushButton[
+  onclick={this.getField("secA").display = display.visible;}
+]{A anzeigen}
+\quad
+\PushButton[
+  onclick={this.getField("secA").display = display.hidden;}
+]{A ausblenden}
+
+\medskip
+
+% --- Buttons für Section B ---
+\textbf{Section B steuern:}\par
+\PushButton[
+  onclick={this.getField("secB").display = display.visible;}
+]{B anzeigen}
+\quad
+\PushButton[
+  onclick={this.getField("secB").display = display.hidden;}
+]{B ausblenden}
+
+\bigskip
+\hrule
+\bigskip
+
+% ============================================================
+% SECTION A (eigenes PDF-Objekt)
+% ============================================================
+
+\Annot[
+  name=secA,
+  width=\linewidth,
+  height=180pt,
+  bordercolor={1 1 1}
+]{%
+  \parbox{\linewidth}{
+    \section*{Section A}
+
+    Dies ist der Inhalt von Section A.  
+    Diese Section kann unabhängig von Section B ein- oder ausgeblendet werden.
+
+    \medskip
+    Eingabefeld A:
+
+    \TextField[
+      name=eingabeA,
+      width=0.9\linewidth,
+      charsize=12pt
+    ]{}
+  }
+}
+
+\bigskip
+
+% ============================================================
+% SECTION B (eigenes PDF-Objekt)
+% ============================================================
+
+\Annot[
+  name=secB,
+  width=\linewidth,
+  height=180pt,
+  bordercolor={1 1 1}
+]{%
+  \parbox{\linewidth}{
+    \section*{Section B}
+
+    Dies ist der Inhalt von Section B.  
+    Auch diese Section ist unabhängig steuerbar.
+
+    \medskip
+    Eingabefeld B:
+
+    \TextField[
+      name=eingabeB,
+      width=0.9\linewidth,
+      charsize=12pt
+    ]{}
+  }
+}
+
+\end{document}

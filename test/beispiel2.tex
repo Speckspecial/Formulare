@@ -1,0 +1,84 @@
+\documentclass[a4paper, 10pt]{article}
+\pdfminorversion=7
+
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{eforms}
+%\everyCheckBox{width=10bp, height=10bp}
+%\everyTextField{bordercolor={0 0 0}, height=2cm}
+%\everyTextField{\BC{1 0 0}\BG{0.9 0.9 0.9}\textFont{Courier}\textSize{10}}
+
+% Globale Einstellungen für ein harmonisches Erscheinungsbild
+%\everyRadioButton{radiosymbol=circle}
+
+\begin{document}
+
+\section*{SV 1919 Osterburken e.V.}
+\section*{Aufnahmeantrag (Stand 02/2026)}
+
+Hiermit beantrage ich die Mitgliedschaft beim SV~1919~Osterburken~e.V..
+
+\TextField[name=txtEintrittsdatum, format={AFDate_FormatEx("dd.mm.yyyy");}, keystroke={AFDate_KeystrokeEx("dd.mm.yyyy");}, bordercolor={0 0 0}]{Eintrittsdatum:}
+
+\par\medskip
+
+\begin{tabular}{@{}l l@{}}
+\ChoiceMenu[name=radioMitgliedschaft, radio, radiosymbol=\ding{55}, onclick={this.getField("Einzelmitglied").display = display.visible;}, bordercolor={0 0 0}]{}{=EinzelErwachsener} & 
+Mitgliedschaft für mich \\
+\ChoiceMenu[name=radioMitgliedschaft, radio, radiosymbol=\ding{55}, onclick={this.getField("Einzelmitglied").display = display.hidden;}, bordercolor={0 0 0}]{}{=EinzelKind} & 
+Mitgliedschaft für mein Kind (Antragsteller/in ist erziehungsberechtigt.)\\
+\ChoiceMenu[name=radioMitgliedschaft, radio, radiosymbol=\ding{55}, onclick={this.getField("Einzelmitglied").display = display.hidden;}, bordercolor={0 0 0}]{}{=Familie} & 
+Familienmitgliedschaft für mich, Partner/Partnerin und Kinder \\
+\end{tabular}
+
+\subsection*{Antragsteller/Antragstellerin}
+
+\begin{tabular}{@{}l l@{}}
+Vorname: & \TextField[name=txtAntragstellerVorname, bordercolor={0 0 0}, width=10cm]{} \\
+Nachname: & \TextField[name=txtAntragstellerNachname, bordercolor={0 0 0}, width=10cm]{} \\
+Geburtsdatum: & \TextField[name=txtAntragstellerGeburtsdatum, format={AFDate_FormatEx("dd.mm.yyyy");}, keystroke={AFDate_KeystrokeEx("dd.mm.yyyy");}, bordercolor={0 0 0}]{} \\
+\end{tabular}
+
+\par\medskip
+
+\ChoiceMenu[radio,name=radioGeschlecht, radiosymbol=\ding{52}, bordercolor={0 0 0}]{Geschlecht:}
+{männlich=m, weiblich=w, divers=d}
+
+\subsection*{Kontaktdaten des Antragstellers/der Antragstellerin}
+
+\par\medskip
+
+\begin{tabular}{@{}l l@{}}
+\TextField[name=txtStrasse, width=10cm, bordercolor={0 0 0}]{Straße:} & \TextField[name=txtHausNr, width=2cm, bordercolor={0 0 0}]{Hausnr.:} \\
+\end{tabular}
+
+\par
+
+\begin{tabular}{@{}l l@{}}
+\TextField[name=txtPLZ, width=4cm, bordercolor={0 0 0}]{PLZ:} & \TextField[name=txtWohnort, width=8cm, bordercolor={0 0 0}]{Wohnort:} \\
+\end{tabular}
+
+\par\medskip
+
+\begin{tabular}{@{}l l@{}}
+Telefonnr: & \TextField[name=txtTelefon, width=8cm, bordercolor={0 0 0}]{} \\
+E-Mail: & \TextField[name=txtEMail, width=8cm, bordercolor={0 0 0}]{} \\
+\end{tabular}
+
+\iffalse
+\Annot[
+    name=Einzelmitglied,
+    width=\linewidth,
+    height=180pt,
+    bordercolor={1 1 1}
+]{
+    \parbox{\linewidth}{
+        \section*{Einzelmitglied: Auswahl der Abteilung}
+
+        \begin{tabular}{l l}
+        \radioButton{txtAntragstellerAbteilung}{12bp}{12bp}{false} Fußball & \radioButton{txtAntragstellerAbteilung}{12bp}{12bp}{false} Turnen \\
+        \end{tabular}
+    }
+}
+\fi
+
+\end{document}
