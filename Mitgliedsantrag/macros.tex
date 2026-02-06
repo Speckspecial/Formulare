@@ -1,0 +1,109 @@
+
+\newcommand{\person}[2]{
+\subsection*{#1}
+\begin{tabular}{@{}p{2.5cm} @{}l}
+\makecell[cl]{Vorname:} & 
+\makecell[cl]{\TextField[
+    name=txtVorname#2,
+    bordercolor={0 0 0}, 
+    width=10cm, height=0.7cm
+  ]{}
+} \\[3ex]
+\makecell[cl]{Nachname:} & 
+\makecell[cl]{\TextField[
+    name=txtNachname#2, 
+    bordercolor={0 0 0}, 
+    width=10cm, height=0.7cm
+  ]{}
+} \\[3ex]
+\makecell[cl]{Geburtsdatum:} &
+\makecell[cl]{\TextField[
+    name=txtGeburtsdatum#2, 
+    format={AFDate_FormatEx("dd.mm.yyyy");}, 
+    keystroke={AFDate_KeystrokeEx("dd.mm.yyyy");}, 
+    bordercolor={0 0 0},
+    height=0.7cm
+  ]{}
+} \\
+\end{tabular}
+\\[1ex]
+\begin{tabular}{@{}p{2.5cm} @{}l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l}
+\makecell[cl]{Geschlecht:} & 
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=m}} &
+\makecell[cl]{männlich} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=w}} &
+\makecell[cl]{weiblich} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=d}} &
+\makecell[cl]{divers} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=u}} &
+\makecell[cl]{keine Angabe}
+\end{tabular}
+}
+
+\newcommand{\department}[1]{
+\\[1ex]
+\begin{tabular}{@{}p{2.5cm} @{}l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l}
+\makecell[cl]{Abteilung:} & 
+\makecell[cl]{\ChoiceMenu[radio,name=radioAbteilung#1, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=f}} &
+\makecell[cl]{Fußball} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioAbteilung#1, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=t}} &
+\makecell[cl]{Turnen} 
+\end{tabular}
+}
+
+\newcommand{\member}[3]{
+\begin{tcolorbox}[
+    colback=white,    % Hintergrundfarbe
+    colframe=svoblau,  % Rahmenfarbe
+    title=#3,  % Der Titel
+    fonttitle=\bfseries,     % Titel fett
+    arc=1.5mm,           % Ecken (optional: arc=2mm für gerundet)
+    boxrule=0.5mm            % Dicke des Rahmens
+]
+\person{#1}{#2}
+
+\department{#2}
+\end{tcolorbox}
+}
+
+\newcommand{\headerfamily}{
+\begin{flushleft}
+    \vspace*{-1.2cm}
+    \begin{minipage}{0.8\textwidth}
+        {\Huge\bfseries\textcolor{svoblau}{SV~1919~Osterburken~e.V.}}
+        \\[1ex]{\Large AUFNAHMEANTRAG (Stand 02/2026) \hfill Seite \thepage}
+        \\[4ex]
+        Daten zur Familienmitgliedschaft
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.15\textwidth}
+        \raggedleft
+        \includegraphics[width=\linewidth]{SVO Logo 2019.jpg} % <-- Dein Logo hier
+    \end{minipage}
+\end{flushleft}
+}
+
+\newcommand{\signature}[1]{
+\\[3ex]
+\begin{tabular}{@{}l l l l l}
+\makecell[cl]{Ort:} & 
+\makecell[cl]{\TextField[
+    name=txtOrt#1,
+    bordercolor={0 0 0}, 
+    width=4.5cm, height=0.7cm
+  ]{}
+} &
+\makecell[cl]{Datum:} & 
+\makecell[cl]{\TextField[
+    name=txtDatum#1, 
+    format={AFDate_FormatEx("dd.mm.yyyy");}, 
+    keystroke={AFDate_KeystrokeEx("dd.mm.yyyy");}, 
+    bordercolor={0 0 0},
+    height=0.7cm
+  ]{}
+} & \\
+& & & & \makecell[cc]{\rule{6.5cm}{0.4pt}\\[0.5ex]
+    \footnotesize Unterschrift
+}
+\end{tabular}
+}

@@ -71,3 +71,5 @@ _minted*
 ## Other tools
 *.xdv
 *.xdy
+
+*.djs
