@@ -1,0 +1,149 @@
+
+\begin{tcolorbox}[
+    colback=white,    % Hintergrundfarbe
+    colframe=svoblau,  % Rahmenfarbe
+    fonttitle=\bfseries,     % Titel fett
+    arc=1.5mm,           % Ecken (optional: arc=2mm für gerundet)
+    boxrule=0.5mm            % Dicke des Rahmens
+]
+\subsection*{Zahlungsempfänger}
+\begin{tabular}{@{}l l l l}
+\makecell[cl]{Name:} &
+\makecell[cl]{\TextField[
+    name=txtSVOName,
+    bordercolor={0 0 0},
+    readonly,
+    value={Sportverein 1919 Osterburken e.V.},
+    width=7cm, height=0.5cm,
+  ]{}
+} \\[3ex]
+\makecell[cl]{Straße und Hausnr.:} &
+\makecell[cl]{\TextField[
+    name=txtSVOStrasseHausnr,
+    bordercolor={0 0 0},
+    readonly,
+    value={Postfach 1244},
+    width=7cm, height=0.5cm
+  ]{}
+} & & \\[3ex]
+\makecell[cl]{PLZ und Ort:} &
+\makecell[cl]{\TextField[
+    name=txtSVOPLZOrt,
+    bordercolor={0 0 0},
+    readonly,
+    value={74702 Osterburken},
+    width=7cm, height=0.5cm
+  ]{}
+} &
+\makecell[cl]{Land.} &
+\makecell[cl]{\TextField[
+    name=txtSVOMandatref,
+    bordercolor={0 0 0},
+    readonly,
+    value={Deutschland},
+    width=4cm, height=0.5cm
+]{}}
+\end{tabular}
+\noindent
+\\[2ex]
+\begin{tabular}{@{}l l}
+\makecell[cl]{Gläubiger-Identifikationsnummer:} &
+\makecell[cl]{\TextField[
+    name=txtSVOIdentnr,
+    bordercolor={0 0 0},
+    readonly,
+    format={var f = this.getField(event.targetName); f.textFont="Courier";},
+    value={ D E 5 9 Z Z Z 0 0 0 0 0 6 1 4 9 5 4},
+    width=8cm, height=0.5cm
+]{}} \\[2ex]
+\makecell[cl]{Mandatsreferenz:\\ (vom Zahlungsempfänger auszufüllen)} &
+\makecell[cl]{\TextField[
+    name=txtSVOMandatref,
+    bordercolor={0 0 0},
+    readonly,
+    width=8cm, height=0.5cm
+]{}}
+\end{tabular}
+
+\noindent
+\\[0.5ex]
+\rule{\textwidth}{0.4pt}
+\\[1ex]
+Ich ermächtige / Wir ermächtigen (A) den Zahlungsempfänger (Name siehe oben), Zahlungen von meinem / unserem Konto
+mittels Lastschrift einzuziehen. Zugleich (B) weise ich mein / weisen wir unser Kreditinstitut an, die vom Zahlungsempfänger
+(Name siehe oben) auf mein / unser Konto gezogenen Lastschriften einzulösen.
+\par\medskip
+Hinweis: Ich kann / Wir können innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten
+Betrages verlangen. Es gelten dabei die mit meinem / unserem Kreditinstitut vereinbarten Bedingungen.
+
+\noindent
+\\[0.5ex]
+\begin{tabular}{@{}l l @{\hspace{0.5em}}l}
+\makecell[cl]{Zahlungsart:} &
+\makecell[cl]{\CheckBox[
+    name=checkSVOZahlungsart,
+    bordercolor={0 0 0},
+    readonly,
+    checked
+]{}} &
+\makecell[cl]{Wiederkehrende Zahlung}
+\end{tabular}
+\\[1ex]
+\rule{\textwidth}{0.4pt}
+\\[2ex]
+\begin{tabular}{@{}l l @{\hspace{0.5em}}l l @{\hspace{0.5em}}l}
+\makecell[cl]{Zahlungspflichtiger:} &
+\makecell[cl]{\ChoiceMenu[
+    radio,
+    radiosymbol=\ding{108},
+    name=checkSVOZahler,
+    keystroke={selectPayor();},
+    bordercolor={0 0 0}
+]{}{=A}} &
+\makecell[cl]{Antragsteller/-in} &
+\makecell[cl]{\ChoiceMenu[
+    radio,
+    radiosymbol=\ding{108},
+    name=checkSVOZahler,
+    keystroke={selectPayor();},
+    bordercolor={0 0 0}
+]{}{=N}} &
+\makecell[cl]{Andere Person}
+\end{tabular}
+
+\noindent
+\\[1ex]
+\personneutral{Zahlungspflichtige/r und Bankdaten}{Zahler}
+\noindent
+\\[2ex]
+\address{Zahler}
+
+\noindent
+\\[0.5ex]
+\rule{\textwidth}{0.4pt}
+\\[2ex]
+\begin{tabular}{@{}p{3cm} l}
+\makecell[cl]{IBAN:\\ (max. 34 Stellen)} &
+\makecell[cl]{\IBANField{txtIBANZahler}}
+\end{tabular}
+
+\noindent
+\\[2ex]
+\begin{tabular}{@{}p{3cm} l p{7cm} }
+\makecell[cl]{BIC:\\ (8 oder 11 Stellen)} &
+\makecell[cl]{\TextField[
+    name=txtBICZahler,
+    bordercolor={0 0 0},
+    maxlen=11,
+    format={var f = this.getField(event.targetName); f.textFont="Courier";},
+    width=4cm, height=0.7cm
+]{}} &
+\makecell[cl]{\small Hinweis: Die Angabe des BIC kann entfallen,\\
+\small wenn der Zahlungsdienstleister des/der Zahlungspflichtigen\\
+\small in einem EU-/EWR-Mitgliedsstaat ansässig ist.}
+\end{tabular}
+\rule{\textwidth}{0.4pt}
+\\[2ex]
+\signature{Unterschreiber}
+
+\end{tcolorbox}

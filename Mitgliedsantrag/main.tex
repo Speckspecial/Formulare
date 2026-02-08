@@ -6,145 +6,18 @@
 \usepackage{titling}
 \usepackage{setspace}
 \usepackage{makecell}
-\usepackage[unicode]{hyperref}
 \usepackage{xcolor}
 \usepackage[most]{tcolorbox}
 \usepackage{ocgx2}      % erzeugt OCG-Layer in LaTeX
-\usepackage{eforms}     
+\usepackage{tikz}
+\usepackage{eforms}
 \usepackage{insdljs}    % eingebettetes JavaScript
 
 \input{macros.tex}
 
 \definecolor{svoblau}{RGB}{24,47,149}
 
-\begin{insDLJS}[selectMemberType]{selectMemberType}{}
-function selectMemberType(caller) 
-{
-    var radioMembership = this.getField("radioMitgliedschaft").value;
-    var checkFamilyPartner = this.getField("checkPartner").value !== "Off";
-    var numChilds = this.getField("txtKinder").value;
-    if (! numChilds)
-        numChilds = 0;
-    if (numChilds > 5)
-        numChilds = 5;
-
-    var ocgs = this.getOCGs();
-    if (!ocgs)
-        return;
-
-    var ocgAdultDepartment;
-    var ocgChild;
-    var ocgFamily;
-    var ocgPartner;
-    var ocgChilds = new Array(5);
-
-    for (var i = 0; i < ocgs.length; i++) {
-        if (ocgs[i].name == "AntragstellerAbteilung")
-            ocgAdultDepartment = ocgs[i];
-        else if (ocgs[i].name == "MeinKind")
-            ocgChild = ocgs[i];
-        else if (ocgs[i].name == "Familie")
-            ocgFamily = ocgs[i];
-        else if (ocgs[i].name == "Partner")
-            ocgPartner = ocgs[i];
-        else {
-            for (var k = 0; k < 5; ++k)
-            {
-                var nameChild = "Kind" + k
-                if (ocgs[i].name == nameChild)
-                    ocgChilds[k] = ocgs[i];
-            }
-        }
-    }
-
-    function changeVisibilityMember(visible, postfix)
-    {
-        var displayVisible = visible ? display.visible : display.hidden;
-
-        this.getField("txtVorname" + postfix).display = displayVisible;
-        this.getField("txtNachname" + postfix).display = displayVisible;
-        this.getField("txtGeburtsdatum" + postfix).display = displayVisible;
-        this.getField("radioGeschlecht" + postfix).display = displayVisible;
-        this.getField("radioAbteilung" + postfix).display = displayVisible;
-    }
-
-    function changeVisibilityAdult(visible) 
-    {
-        ocgAdultDepartment.state = visible;
-
-        var displayVisible = visible ? display.visible : display.hidden;
-        this.getField("radioAbteilungAntragsteller").display = displayVisible;
-    }
-    function changeVisibilityChild(visible) 
-    {
-        ocgChild.state = visible;
-        changeVisibilityMember(visible, "Kind");
-    }
-    function changeVisibilityFamily(visible) 
-    {
-        ocgFamily.state = visible;
-        ocgAdultDepartment.state = visible;
-
-        var displayVisible = visible ? display.visible : display.hidden;
-        this.getField("radioAbteilungAntragsteller").display = displayVisible;
-        this.getField("checkPartner").display = displayVisible;
-        this.getField("txtKinder").display = displayVisible;
-
-        var checkBoxVisible = visible;
-        if (! checkFamilyPartner)
-            checkBoxVisible = false;
-        ocgPartner.state = checkBoxVisible;
-        changeVisibilityMember(checkBoxVisible, "Partner");
-
-        for (var k = 0; k < numChilds; ++k) {
-            ocgChilds[k].state = visible;
-            changeVisibilityMember(visible, "Kind" + k);
-        }
-        for (var k = numChilds; k < 5; ++k) {
-            ocgChilds[k].state = false;
-            changeVisibilityMember(false, "Kind" + k);
-        }
-    }
-
-    if (caller == "memberType")
-    {
-        radioMembership = event.value;
-    }
-    else if (caller == "checkPartner")
-    {
-        checkFamilyPartner = (event.value == "Yes");
-    }
-    else if (caller == "txtKinder")
-    {
-        numChilds = event.value;
-    }
-    console.println("radioMembership " + radioMembership);
-    console.println("checkFamilyPartner " + checkFamilyPartner);
-    console.println("numChilds " + numChilds);
-
-    switch (radioMembership[12])
-    {
-        case "E":
-            console.println("ADULT");
-            changeVisibilityChild(false);
-            changeVisibilityFamily(false);
-            changeVisibilityAdult(true);
-            break;
-        case "K":
-            console.println("CHILD");
-            changeVisibilityAdult(false);
-            changeVisibilityFamily(false);
-            changeVisibilityChild(true);
-            break;
-        case "F":
-            console.println("FAMILY");
-            changeVisibilityAdult(false);
-            changeVisibilityChild(false);
-            changeVisibilityFamily(true);
-            break;
-    }
-}
-\end{insDLJS}
+\input{eventhandler.js}
 
 % ---------------------------------------------------------
 % Dokument
@@ -152,7 +25,9 @@ function selectMemberType(caller)
 \pagenumbering{arabic}
 \setlength{\parindent}{0pt}
 
+
 \begin{document}
+\begin{Form}[NeedAppearances=true]
 
 \begin{flushleft}
     \vspace*{-1.2cm}
@@ -172,127 +47,146 @@ function selectMemberType(caller)
 \begin{tcolorbox}[
     colback=white,    % Hintergrundfarbe
     colframe=svoblau,  % Rahmenfarbe
-    title=Antragdaten,  % Der Titel
+    title={Antragsteller/-in},  % Der Titel
     fonttitle=\bfseries,     % Titel fett
     arc=1.5mm,           % Ecken (optional: arc=2mm für gerundet)
     boxrule=0.5mm            % Dicke des Rahmens
 ]
 \begin{tabular}{@{}l l@{}}
-\makecell[cl]{Eintrittsdatum:} & 
-\makecell[cl]{\TextField[
-    name=txtEintrittsdatum, 
-    format={AFDate_FormatEx("dd.mm.yyyy");}, 
-    keystroke={AFDate_KeystrokeEx("dd.mm.yyyy");}, 
-    bordercolor={0 0 0},
-    height=0.7cm
-]{}}
+\makecell[cl]{Eintrittsdatum:} &
+\makecell[cl]{\DateField{txtEintrittsdatum}{-12}{12}}
 \end{tabular}
 \\[1ex]
 \begin{tabular}{@{}l l@{}}
 \ChoiceMenu[
-    name=radioMitgliedschaft, 
-    radio, radiosymbol=\ding{55}, 
+    name=radioMitgliedschaft,
+    radio, radiosymbol=\ding{108},
     keystroke={selectMemberType("memberType");},
     bordercolor={0 0 0}
-]{}{=E} & 
-Mitgliedschaft für mich \\
+]{}{=E} &
+Mitgliedschaft für mich \\[0.5ex]
 \ChoiceMenu[
     name=radioMitgliedschaft,
-    radio, radiosymbol=\ding{55},
+    radio, radiosymbol=\ding{108},
     keystroke={selectMemberType("memberType");},
     bordercolor={0 0 0}
-]{}{=K} & 
-Mitgliedschaft für mein Kind (Antragsteller/-in ist erziehungsberechtigt.)\\
+]{}{=K} &
+Mitgliedschaft für mein Kind (Antragsteller/-in ist erziehungsberechtigt.) \\[0.5ex]
 \ChoiceMenu[
     name=radioMitgliedschaft,
-    radio, radiosymbol=\ding{55},
+    radio, radiosymbol=\ding{108},
     keystroke={selectMemberType("memberType");},
     bordercolor={0 0 0}
-]{}{=F} & 
+]{}{=F} &
 Familienmitgliedschaft für mich, Partner/Partnerin und Kinder \\
 \end{tabular}
 
+\noindent
+\\[1ex]
 \person{Antragsteller/-in}{Antragsteller}
+
+\address{Antragsteller}
+
+\noindent
+\\[2ex]
+\begin{tabular}{@{}l l@{}}
+\makecell[cl]{E-Mail:} &
+\makecell[cl]{\EmailField{txtEMail}}\\[3ex]
+\makecell[cl]{Telefon:} &
+\makecell[cl]{\PhoneField{txtTelefon}}
+\end{tabular}
+
 \end{tcolorbox}
 
 \begin{ocg}{AntragstellerAbteilung}{AntragstellerAbteilung}{true}
 \begin{tcolorbox}[
     colback=white,    % Hintergrundfarbe
     colframe=svoblau,  % Rahmenfarbe
-    title=Abteilung für Antragsteller/-in,  % Der Titel
+    title={Abteilung für Antragsteller/-in als Mitglied},  % Der Titel
     fonttitle=\bfseries,     % Titel fett
     arc=1.5mm,           % Ecken (optional: arc=2mm für gerundet)
     boxrule=0.5mm            % Dicke des Rahmens
 ]
+\noindent
+\\[0.5ex]
 \department{Antragsteller}
 \end{tcolorbox}
 \end{ocg}
 
-\begin{ocg}{MeinKind}{MeinKind}{true}
-\member{Mein Kind}{Kind}{Einzelmitgliedschaft für mein Kind}
-\end{ocg}
-
+\begin{tcolorbox}[
+    colback=white,    % Hintergrundfarbe
+    colframe=svoblau,  % Rahmenfarbe
+    fonttitle=\bfseries,     % Titel fett
+    arc=1.5mm,           % Ecken (optional: arc=2mm für gerundet)
+    boxrule=0.5mm            % Dicke des Rahmens
+]
 \section*{Einverständniserklärung}
 
 Ich erkenne die Vereinssatzung in allen Rechten und Pflichten an.
 Ich bin damit einverstanden, Informationen, Einladungen etc. des Vereins per E-Mail zu erhalten.
 
+\noindent
+\\[1ex]
 \signature{Einverstaendnis}
+\end{tcolorbox}
 
 \pagebreak
-\headerfamily
+\headermembers
+
+\begin{ocg}{MeinKind}{MeinKind}{true}
+\member{Mein Kind}{Kind}{Einzelmitgliedschaft für mein Kind}
+\end{ocg}
 
 \begin{ocg}{Familie}{Familie}{true}
 \vspace{0.5cm}
 \begin{tcolorbox}[
     colback=white,    % Hintergrundfarbe
     colframe=svoblau,  % Rahmenfarbe
-    title=Mitgliedschaft für die gesante Familie,  % Der Titel
+    title={Mitgliedschaft für die gesante Familie},  % Der Titel
     fonttitle=\bfseries,     % Titel fett
     arc=1.5mm,           % Ecken (optional: arc=2mm für gerundet)
     boxrule=0.5mm            % Dicke des Rahmens
 ]
-Familienmitgliedschaft mit 
-\CheckBox[
+\begin{tabular}{@{}l l @{\hspace{0.5em}}l l @{\hspace{0.5em}}l}
+\makecell[cl]{Familienmitgliedschaft mit} &
+\makecell[cl]{\CheckBox[
     name=checkPartner,
-    bordercolor={0 0 0}, 
-    keystroke={selectMemberType("checkPartner");}
-]{}
-Partner/-in und~\TextField[
-    name=txtKinder,
-    keystroke={selectMemberType("txtKinder");},
     bordercolor={0 0 0},
-    height=0.7cm,
-    width=0.8cm
-]{} Kind/Kinder:
+    keystroke={selectMemberType("checkPartner");}
+]{}} &
+\makecell[cl]{Partner/-in und} &
+\makecell[cl]{\ChoiceMenu[
+    name=choiceKinder,
+    radio,
+    keystroke={selectMemberType("choiceKinder");},
+    bordercolor={0 0 0},
+    radiosymbol=\ding{108}
+]{}{{ 0 }=0, { 1 }=1, { 2 }=2, { 3 }=3, { 4 }=4}Kind/Kinder}
+\end{tabular}
 \end{tcolorbox}
 \end{ocg}
 
 \begin{ocg}{Partner}{Partner}{true}
-\member{Partner/-in}{Partner}{Mitgliedschaft für die gesante Familie}
+\member{Partner/-in}{Partner}{Familienmitgliedschaft für den/die Partner/-in}
 \end{ocg}
 
 \begin{ocg}{Kind0}{Kind0}{true}
-\member{1. Kind}{Kind0}{Mitgliedschaft für die gesante Familie}
-\end{ocg}
-
-\begin{ocg}{Kind1}{Kind1}{true}
-\member{2. Kind}{Kind1}{Mitgliedschaft für die gesante Familie}
+\memberchild{1. Kind}{Kind0}{Familienmitgliedschaft für das 1. Kind}
 \end{ocg}
 
 \pagebreak
-\headerfamily
+\headermembers
+
+\begin{ocg}{Kind1}{Kind1}{true}
+\memberchild{2. Kind}{Kind1}{Familienmitgliedschaft für das 2. Kind}
+\end{ocg}
 
 \begin{ocg}{Kind2}{Kind2}{true}
-\member{3. Kind}{Kind2}{Mitgliedschaft für die gesante Familie}
+\memberchild{3. Kind}{Kind2}{Familienmitgliedschaft für das 3. Kind}
 \end{ocg}
 
 \begin{ocg}{Kind3}{Kind3}{true}
-\member{4. Kind}{Kind3}{Mitgliedschaft für die gesante Familie}
-\end{ocg}
-
-\begin{ocg}{Kind4}{Kind4}{true}
-\member{5. Kind}{Kind4}{Mitgliedschaft für die gesante Familie}
+\memberchild{4. Kind}{Kind3}{Familienmitgliedschaft für das 4. Kind}
 \end{ocg}
 
 \pagebreak
@@ -303,7 +197,7 @@ Partner/-in und~\TextField[
         {\Huge\bfseries\textcolor{svoblau}{SV~1919~Osterburken~e.V.}}
         \\[1ex]{\Large AUFNAHMEANTRAG (Stand 02/2026) \hfill Seite \thepage}
         \\[4ex]
-        {\huge\bfseries SEPA Lastschriftmandat}
+        {\Large\bfseries SEPA Lastschriftmandat}
     \end{minipage}
     \hfill
     \begin{minipage}{0.15\textwidth}
@@ -312,6 +206,7 @@ Partner/-in und~\TextField[
     \end{minipage}
 \end{flushleft}
 
+\input{sepa.tex}
 
-
+\end{Form}
 \end{document}

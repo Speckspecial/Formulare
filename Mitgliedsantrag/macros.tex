@@ -1,79 +1,137 @@
+\input{formhelper.tex}
 
-\newcommand{\person}[2]{
-\subsection*{#1}
+\newcommand{\internalpersonneutral}[3]{
 \begin{tabular}{@{}p{2.5cm} @{}l}
-\makecell[cl]{Vorname:} & 
+\makecell[cl]{Vorname:} &
 \makecell[cl]{\TextField[
     name=txtVorname#2,
-    bordercolor={0 0 0}, 
-    width=10cm, height=0.7cm
-  ]{}
-} \\[3ex]
-\makecell[cl]{Nachname:} & 
-\makecell[cl]{\TextField[
-    name=txtNachname#2, 
-    bordercolor={0 0 0}, 
-    width=10cm, height=0.7cm
-  ]{}
-} \\[3ex]
-\makecell[cl]{Geburtsdatum:} &
-\makecell[cl]{\TextField[
-    name=txtGeburtsdatum#2, 
-    format={AFDate_FormatEx("dd.mm.yyyy");}, 
-    keystroke={AFDate_KeystrokeEx("dd.mm.yyyy");}, 
     bordercolor={0 0 0},
-    height=0.7cm
-  ]{}
-} \\
+    width=10cm, height=0.7cm
+]{}} \\[3ex]
+\makecell[cl]{Nachname:} &
+\makecell[cl]{\TextField[
+    name=txtNachname#2,
+    bordercolor={0 0 0},
+    width=10cm, height=0.7cm
+]{}} \\[3ex]
+\makecell[cl]{Geburtsdatum:} &
+\makecell[cl]{\DateField{txtGeburtsdatum#2}{-#3}{0}}
 \end{tabular}
-\\[1ex]
+}
+
+\newcommand{\personneutral}[2]{
+    \internalpersonneutral{#1}{#2}{1320}
+}
+
+\newcommand{\internalperson}[3]{
+\internalpersonneutral{#1}{#2}{#3}
+\\[2ex]
 \begin{tabular}{@{}p{2.5cm} @{}l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l}
-\makecell[cl]{Geschlecht:} & 
-\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=m}} &
+\makecell[cl]{Geschlecht:} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{108}, bordercolor={0 0 0}]{}{=m}} &
 \makecell[cl]{männlich} &
-\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=w}} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{108}, bordercolor={0 0 0}]{}{=w}} &
 \makecell[cl]{weiblich} &
-\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=d}} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{108}, bordercolor={0 0 0}]{}{=d}} &
 \makecell[cl]{divers} &
-\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=u}} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioGeschlecht#2, radiosymbol=\ding{108}, bordercolor={0 0 0}]{}{=u}} &
 \makecell[cl]{keine Angabe}
 \end{tabular}
 }
 
-\newcommand{\department}[1]{
+\newcommand{\person}[2]{
+    \internalperson{#1}{#2}{1320}
+}
+
+\newcommand{\address}[1]{
+\noindent
 \\[1ex]
-\begin{tabular}{@{}p{2.5cm} @{}l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l}
-\makecell[cl]{Abteilung:} & 
-\makecell[cl]{\ChoiceMenu[radio,name=radioAbteilung#1, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=f}} &
-\makecell[cl]{Fußball} &
-\makecell[cl]{\ChoiceMenu[radio,name=radioAbteilung#1, radiosymbol=\ding{55}, bordercolor={0 0 0}]{}{=t}} &
-\makecell[cl]{Turnen} 
+\begin{tabular}{@{}p{1cm} l l l@{}}
+\makecell[cl]{Straße:} &
+\makecell[cl]{\TextField[
+    name=txtStrasse#1,
+    width=10cm,
+    height=0.7cm,
+    bordercolor={0 0 0}
+]{}} &
+\makecell[cl]{Hausnr.:} &
+\makecell[cl]{\TextField[
+    name=txtHausNr#1,
+    width=2cm,
+    height=0.7cm,
+    bordercolor={0 0 0}
+]{}}
+\end{tabular}
+
+\noindent
+\\[1ex]
+\begin{tabular}{@{}p{1cm} l l l l l@{}}
+\makecell[cl]{PLZ:} &
+\makecell[cl]{\TextField[
+    name=txtPLZ#1,
+    width=2.4cm,
+    height=0.7cm,
+    bordercolor={0 0 0}
+]{}} &
+\makecell[cl]{Ort:} &
+\makecell[cl]{\TextField[
+    name=txtOrt#1,
+    width=6.2cm,
+    height=0.7cm,
+    bordercolor={0 0 0}
+]{}} &
+\makecell[cl]{Land:} &
+\makecell[cl]{\TextField[
+    name=txtLand#1,
+    width=3.5cm,
+    height=0.7cm,
+    bordercolor={0 0 0}
+]{}}
 \end{tabular}
 }
 
-\newcommand{\member}[3]{
+\newcommand{\department}[1]{
+\begin{tabular}{@{}p{2.5cm} @{}l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l}
+\makecell[cl]{Abteilung:} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioAbteilung#1, radiosymbol=\ding{108}, bordercolor={0 0 0}]{}{=f}} &
+\makecell[cl]{Fußball} &
+\makecell[cl]{\ChoiceMenu[radio,name=radioAbteilung#1, radiosymbol=\ding{108}, bordercolor={0 0 0}]{}{=t}} &
+\makecell[cl]{Turnen}
+\end{tabular}
+}
+
+\newcommand{\internalmember}[4]{
 \begin{tcolorbox}[
     colback=white,    % Hintergrundfarbe
     colframe=svoblau,  % Rahmenfarbe
-    title=#3,  % Der Titel
+    title={#3},  % Der Titel
     fonttitle=\bfseries,     % Titel fett
     arc=1.5mm,           % Ecken (optional: arc=2mm für gerundet)
     boxrule=0.5mm            % Dicke des Rahmens
 ]
-\person{#1}{#2}
-
+\internalperson{#1}{#2}{#4}
+\noindent
+\\[2ex]
 \department{#2}
 \end{tcolorbox}
 }
 
-\newcommand{\headerfamily}{
+\newcommand{\member}[3]{
+    \internalmember{#1}{#2}{#3}{1320} % age <= 1320 month (= 120 years)
+}
+
+\newcommand{\memberchild}[3]{
+    \internalmember{#1}{#2}{#3}{216} % age <= month (= 18 years)
+}
+
+\newcommand{\headermembers}{
 \begin{flushleft}
     \vspace*{-1.2cm}
     \begin{minipage}{0.8\textwidth}
         {\Huge\bfseries\textcolor{svoblau}{SV~1919~Osterburken~e.V.}}
         \\[1ex]{\Large AUFNAHMEANTRAG (Stand 02/2026) \hfill Seite \thepage}
         \\[4ex]
-        Daten zur Familienmitgliedschaft
+        Mitgliederdaten
     \end{minipage}
     \hfill
     \begin{minipage}{0.15\textwidth}
@@ -84,25 +142,17 @@
 }
 
 \newcommand{\signature}[1]{
-\\[3ex]
 \begin{tabular}{@{}l l l l l}
-\makecell[cl]{Ort:} & 
+\makecell[cl]{Ort:} &
 \makecell[cl]{\TextField[
     name=txtOrt#1,
-    bordercolor={0 0 0}, 
-    width=4.5cm, height=0.7cm
-  ]{}
-} &
-\makecell[cl]{Datum:} & 
-\makecell[cl]{\TextField[
-    name=txtDatum#1, 
-    format={AFDate_FormatEx("dd.mm.yyyy");}, 
-    keystroke={AFDate_KeystrokeEx("dd.mm.yyyy");}, 
     bordercolor={0 0 0},
-    height=0.7cm
-  ]{}
-} & \\
-& & & & \makecell[cc]{\rule{6.5cm}{0.4pt}\\[0.5ex]
+    width=4.5cm, height=0.7cm
+]{}
+} &
+\makecell[cl]{Datum:} &
+\makecell[cl]{\DateField{txtDatum#1}{-12}{12}} &\\
+& & & & \makecell[cc]{\rule{6cm}{0.4pt}\\[0.5ex]
     \footnotesize Unterschrift
 }
 \end{tabular}

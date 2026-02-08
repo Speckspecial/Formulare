@@ -1,0 +1,75 @@
+\newcommand{\DateField}[3]{
+\begin{ocg}{ocg#1}{ocg#1}{false}
+\begin{tikzpicture}[overlay, remember picture]
+    \draw[line width=1pt, red]
+    (-0.00, -0.25) rectangle (3.20, 0.80); % Größe des Rahmens
+\end{tikzpicture}
+\end{ocg}
+\TextField[
+    onblur={dateChecker(#2, #3);}, % range in month (negativ are in past, positiv are in futute)
+    validate={dateChecker(#2, #3);}, % range in month (negativ are in past, positiv are in futute)
+    name=#1,
+    format={AFDate_FormatEx("dd.mm.yyyy");},
+    keystroke={AFDate_KeystrokeEx("dd.mm.yyyy");},
+    bordercolor={0 0 0},
+    borderwidth=1pt,
+    borderstyle=S,
+    height=0.7cm,
+    width=3cm,
+]{}
+}
+
+\newcommand{\EmailField}[1]{
+\begin{ocg}{ocg#1}{ocg#1}{false}
+\begin{tikzpicture}[overlay, remember picture]
+    \draw[line width=1pt, red]
+    (-0.00, -0.25) rectangle (10.20, 0.80); % Größe des Rahmens
+\end{tikzpicture}
+\end{ocg}
+\TextField[
+    name=#1,
+    keystroke={emailKeystroke();},
+    onblur={emailChecker();},
+    validate={emailChecker();},
+    bordercolor={0 0 0},
+    width=10cm,
+    height=0.7cm
+]{}
+}
+
+\newcommand{\PhoneField}[1]{
+\begin{ocg}{ocg#1}{ocg#1}{false}
+\begin{tikzpicture}[overlay, remember picture]
+    \draw[line width=1pt, red]
+    (-0.00, -0.25) rectangle (10.20, 0.80); % Größe des Rahmens
+\end{tikzpicture}
+\end{ocg}
+\TextField[
+    name=#1,
+    keystroke={phoneKeystroke();},
+    onblur={phoneChecker();},
+    validate={phoneChecker();},
+    bordercolor={0 0 0},
+    width=10cm,
+    height=0.7cm
+]{}
+}
+
+\newcommand{\IBANField}[1]{
+\begin{ocg}{ocg#1}{ocg#1}{false}
+\begin{tikzpicture}[overlay, remember picture]
+    \draw[line width=1pt, red]
+    (-0.00, -0.25) rectangle (8.20, 0.80); % Größe des Rahmens
+\end{tikzpicture}
+\end{ocg}
+\TextField[
+    name=#1,
+    keystroke={ibanKeystroke();},
+    onblur={ibanChecker();},
+    validate={ibanChecker();},
+    format={var f = this.getField(event.targetName); f.textFont="Courier";},
+    bordercolor={0 0 0},
+    width=8cm,
+    height=0.7cm
+]{}
+}
