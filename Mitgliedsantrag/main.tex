@@ -58,31 +58,32 @@
 \end{tabular}
 \\[1ex]
 \begin{tabular}{@{}l l@{}}
-\ChoiceMenu[
+\makecell[cl]{\ChoiceMenu[
     name=radioMitgliedschaft,
     radio, radiosymbol=\ding{108},
     keystroke={selectMemberType("memberType");},
     bordercolor={0 0 0}
-]{}{=E} &
-Mitgliedschaft für mich \\[0.5ex]
-\ChoiceMenu[
+]{}{=E}} &
+\makecell[cl]{Mitgliedschaft für mich (ab 18 Jahre alt) (69,- Euro/Jahr)}\\[2ex]
+\makecell[cl]{\ChoiceMenu[
     name=radioMitgliedschaft,
     radio, radiosymbol=\ding{108},
     keystroke={selectMemberType("memberType");},
     bordercolor={0 0 0}
-]{}{=K} &
-Mitgliedschaft für mein Kind (Antragsteller/-in ist erziehungsberechtigt.) \\[0.5ex]
-\ChoiceMenu[
+]{}{=K}} &
+\makecell[cl]{Mitgliedschaft für mein Kind (bis 17 Jahre alt) (59,- Euro/Jahr)\\
+\bfseries Antragsteller/-in ist erziehungsberechtigt.}\\[2ex]
+\makecell[cl]{\ChoiceMenu[
     name=radioMitgliedschaft,
     radio, radiosymbol=\ding{108},
     keystroke={selectMemberType("memberType");},
     bordercolor={0 0 0}
-]{}{=F} &
-Familienmitgliedschaft für mich, Partner/Partnerin und Kinder \\
+]{}{=F}} &
+\makecell[cl]{Familienmitgliedschaft für mich, Partner/Partnerin und Kinder (110,- Euro/Jahr)}\\
 \end{tabular}
 
 \noindent
-\\[1ex]
+\\[2ex]
 \person{Antragsteller/-in}{Antragsteller}
 
 \address{Antragsteller}
