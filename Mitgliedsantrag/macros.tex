@@ -1,6 +1,6 @@
 \input{formhelper.tex}
 
-\newcommand{\internalpersonneutral}[3]{
+\newcommand{\internalpersonneutral}[4]{
 \begin{tabular}{@{}p{2.5cm} @{}l}
 \makecell[cl]{Vorname:} &
 \makecell[cl]{\TextField[
@@ -15,16 +15,16 @@
     width=10cm, height=0.7cm
 ]{}} \\[3ex]
 \makecell[cl]{Geburtsdatum:} &
-\makecell[cl]{\DateField{txtGeburtsdatum#2}{-#3}{0}}
+\makecell[cl]{\DateField{txtGeburtsdatum#2}{-#4}{-#3}}
 \end{tabular}
 }
 
 \newcommand{\personneutral}[2]{
-    \internalpersonneutral{#1}{#2}{1320}
+    \internalpersonneutral{#1}{#2}{216}{1320}
 }
 
-\newcommand{\internalperson}[3]{
-\internalpersonneutral{#1}{#2}{#3}
+\newcommand{\internalperson}[4]{
+\internalpersonneutral{#1}{#2}{#3}{#4}
 \\[2ex]
 \begin{tabular}{@{}p{2.5cm} @{}l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l l @{\extracolsep{0.5em}}l}
 \makecell[cl]{Geschlecht:} &
@@ -40,7 +40,7 @@
 }
 
 \newcommand{\person}[2]{
-    \internalperson{#1}{#2}{1320}
+    \internalperson{#1}{#2}{216}{1320}
 }
 
 \newcommand{\address}[1]{
@@ -100,7 +100,7 @@
 \end{tabular}
 }
 
-\newcommand{\internalmember}[4]{
+\newcommand{\internalmember}[5]{
 \begin{tcolorbox}[
     colback=white,    % Hintergrundfarbe
     colframe=svoblau,  % Rahmenfarbe
@@ -109,7 +109,7 @@
     arc=1.5mm,           % Ecken (optional: arc=2mm für gerundet)
     boxrule=0.5mm            % Dicke des Rahmens
 ]
-\internalperson{#1}{#2}{#4}
+\internalperson{#1}{#2}{#4}{#5}
 \noindent
 \\[2ex]
 \department{#2}
@@ -117,11 +117,11 @@
 }
 
 \newcommand{\member}[3]{
-    \internalmember{#1}{#2}{#3}{1320} % age <= 1320 month (= 120 years)
+    \internalmember{#1}{#2}{#3}{216}{1320} % age <= 1320 month (= 120 years)
 }
 
 \newcommand{\memberchild}[3]{
-    \internalmember{#1}{#2}{#3}{216} % age <= month (= 18 years)
+    \internalmember{#1}{#2}{#3}{0}{216} % age <= month (= 18 years)
 }
 
 \newcommand{\headermembers}{
@@ -131,7 +131,7 @@
         {\Huge\bfseries\textcolor{svoblau}{SV~1919~Osterburken~e.V.}}
         \\[1ex]{\Large AUFNAHMEANTRAG (Stand 02/2026) \hfill Seite \thepage}
         \\[4ex]
-        Mitgliederdaten
+        Mitgliederdaten (ggf. leere Seite)
     \end{minipage}
     \hfill
     \begin{minipage}{0.15\textwidth}
@@ -142,18 +142,24 @@
 }
 
 \newcommand{\signature}[1]{
-\begin{tabular}{@{}l l l l l}
+\begin{tabular}{@{}p{2cm} @{}l}
 \makecell[cl]{Ort:} &
 \makecell[cl]{\TextField[
     name=txtOrt#1,
     bordercolor={0 0 0},
     width=4.5cm, height=0.7cm
 ]{}
-} &
+}\\[3ex]
 \makecell[cl]{Datum:} &
-\makecell[cl]{\DateField{txtDatum#1}{-12}{12}} &\\
-& & & & \makecell[cc]{\rule{6cm}{0.4pt}\\[0.5ex]
-    \footnotesize Unterschrift
-}
+\makecell[cl]{\DateField{txtDatum#1}{-12}{12}}
+\end{tabular}\hfill
+\begin{tabular}{l}
+\makecell[cc]{\sigField[\BC{0,0,0}]{sigUnterschrift#1}{9cm}{1.8cm}\\[0.5ex]
+\rule{9cm}{0.4pt}\\
+\footnotesize Unterschrift}
 \end{tabular}
 }
+
+%\makecell[cc]{\rule{6cm}{0.4pt}\\[0.5ex]
+%    \footnotesize Unterschrift
+%}

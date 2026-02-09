@@ -1,3 +1,64 @@
+# --- Python Bytecode ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Virtuelle Umgebungen ---
+.venv/
+**/.venv/
+venv/
+env/
+ENV/
+
+# --- Distribution / Packaging ---
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --- Installer Logs ---
+pip-log.txt
+pip-delete-this-directory.txt
+
+# --- Unit Test / Coverage ---
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+pytest_cache/
+coverage.xml
+
+# --- Jupyter Notebook ---
+.ipynb_checkpoints/
+
+# --- MyPy / Pyright / Type Checking ---
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyright/
+
+# --- PyInstaller ---
+*.manifest
+*.spec
+
+# --- Django / Flask / FastAPI ---
+*.log
+local_settings.py
+instance/
+.webassets-cache
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Misc ---
+*.DS_Store
+Thumbs.db
+
 ## Core LaTeX auxiliary files
 *.aux
 *.log

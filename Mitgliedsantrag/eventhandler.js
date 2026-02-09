@@ -359,15 +359,15 @@ function ibanChecker()
                 const digits = (code[3] + code[1] + code[2]).replace(/[A-Z]/g, function (letter) {
                     return letter.charCodeAt(0) - 55;
                 });
-                
+
                 var checksum = digits.slice(0, 2);
                 var fragment;
-                for (var offset = 2; offset < digits.length; offset += 7) 
+                for (var offset = 2; offset < digits.length; offset += 7)
                 {
                     fragment = String(checksum) + digits.substring(offset, offset + 7);
                     checksum = parseInt(fragment, 10) \% 97; % skip meaning as Latex comment
                 }
-                
+
                 hideOcg = (checksum == 1);
             }
         }
