@@ -1,8 +1,9 @@
+%!LW recipe=xelatex
 \documentclass[a4paper, 10pt]{article}
-\pdfminorversion=7
 
 \usepackage[margin=1.5cm]{geometry}
 \usepackage{graphicx}
+\usepackage{ifthen}
 \usepackage{titling}
 \usepackage{setspace}
 \usepackage{makecell}
@@ -17,8 +18,12 @@
     pdfauthor={}, 
     pdftitle={SV 1919 Osterburken e.V. SEPA Lastschriftmandat (Stand 02.2026)}, 
     pdfcreator={LaTeX}, 
-    pdfproducer={pdfLaTeX}
+    pdfproducer={Latex with eforms}
 }
+
+\newlength{\editheight}
+\setlength{\editheight}{0.90cm}
+
 \input{macros.tex}
 
 \definecolor{svoblau}{RGB}{24,47,149}
@@ -33,13 +38,13 @@
 
 
 \begin{document}
-\begin{Form}[NeedAppearances=true]
+\begin{Form}[NeedAppearances=false]
 
 \begin{flushleft}
     \vspace*{-1.2cm}
     \begin{minipage}{0.8\textwidth}
         {\Huge\bfseries\textcolor{svoblau}{SV~1919~Osterburken~e.V.}}
-        \\[1ex]{\Large AUFNAHMEANTRAG (Stand 02/2026) \hfill Seite \thepage}
+        \\[1ex]{\Large Änderung der Bankverbindung (Stand 02/2026)}
         \\[4ex]
         {\Large\bfseries SEPA Lastschriftmandat}
     \end{minipage}
@@ -51,6 +56,8 @@
 \end{flushleft}
 
 \input{sepa.tex}
+
+\sepaform{false}
 
 \end{Form}
 \end{document}

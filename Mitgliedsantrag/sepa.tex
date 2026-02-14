@@ -1,4 +1,4 @@
-
+\newcommand{\sepaform}[1]{
 \begin{tcolorbox}[
     colback=white,    % Hintergrundfarbe
     colframe=svoblau,  % Rahmenfarbe
@@ -16,7 +16,7 @@
     value={Sportverein 1919 Osterburken e.V.},
     width=7cm, height=0.5cm,
   ]{}
-} \\[3ex]
+} \\[2ex]
 \makecell[cl]{Straße und Hausnr.:} &
 \makecell[cl]{\TextField[
     name=txtSVOStrasseHausnr,
@@ -25,7 +25,7 @@
     value={Postfach 1244},
     width=7cm, height=0.5cm
   ]{}
-} & & \\[3ex]
+} & & \\[2ex]
 \makecell[cl]{PLZ und Ort:} &
 \makecell[cl]{\TextField[
     name=txtSVOPLZOrt,
@@ -90,9 +90,10 @@ Betrages verlangen. Es gelten dabei die mit meinem / unserem Kreditinstitut vere
 \end{tabular}
 \\[1ex]
 \rule{\textwidth}{0.4pt}
-\\[2ex]
+\\[1ex]
+\ifthenelse{\equal{#1}{true}}{
 \begin{tabular}{@{}l l @{\hspace{0.5em}}l l @{\hspace{0.5em}}l}
-\makecell[cl]{Zahlungspflichtiger:} &
+\makecell[cl]{Zahlungspflichtige/r:} &
 \makecell[cl]{\ChoiceMenu[
     radio,
     radiosymbol=\ding{108},
@@ -110,7 +111,7 @@ Betrages verlangen. Es gelten dabei die mit meinem / unserem Kreditinstitut vere
 ]{}{=N}} &
 \makecell[cl]{Andere Person}
 \end{tabular}
-
+}{}%\ifthen
 \noindent
 \\[1ex]
 \personneutral{Zahlungspflichtige/r und Bankdaten}{Zahler}
@@ -121,14 +122,14 @@ Betrages verlangen. Es gelten dabei die mit meinem / unserem Kreditinstitut vere
 \noindent
 \\[0.5ex]
 \rule{\textwidth}{0.4pt}
-\\[2ex]
+\\[1ex]
 \begin{tabular}{@{}p{3cm} l}
 \makecell[cl]{IBAN:\\ (max. 34 Stellen)} &
 \makecell[cl]{\IBANField{txtIBANZahler}}
 \end{tabular}
 
 \noindent
-\\[2ex]
+\\[1ex]
 \begin{tabular}{@{}p{3cm} l p{7cm} }
 \makecell[cl]{BIC:\\ (8 oder 11 Stellen)} &
 \makecell[cl]{\TextField[
@@ -136,7 +137,7 @@ Betrages verlangen. Es gelten dabei die mit meinem / unserem Kreditinstitut vere
     bordercolor={0 0 0},
     maxlen=11,
     format={var f = this.getField(event.targetName); f.textFont="Courier";},
-    width=4cm, height=0.7cm
+    width=4cm, height=\editheight
 ]{}} &
 \makecell[cl]{\small Hinweis: Die Angabe des BIC kann entfallen,\\
 \small wenn der Zahlungsdienstleister des/der Zahlungspflichtigen\\
@@ -147,3 +148,4 @@ Betrages verlangen. Es gelten dabei die mit meinem / unserem Kreditinstitut vere
 \signature{Unterschreiber}
 
 \end{tcolorbox}
+}%\newcommand{\sepaform}[1]

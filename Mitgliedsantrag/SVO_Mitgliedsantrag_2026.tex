@@ -1,12 +1,13 @@
+%!LW recipe=xelatex
 \documentclass[a4paper, 10pt]{article}
-\pdfminorversion=7
 
 \usepackage[margin=1.5cm]{geometry}
 \usepackage{graphicx}
+\usepackage{ifthen}
 \usepackage{titling}
 \usepackage{setspace}
 \usepackage{makecell}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 \usepackage[most]{tcolorbox}
 \usepackage{ocgx2}      % erzeugt OCG-Layer in LaTeX
 \usepackage{tikz}
@@ -15,13 +16,21 @@
 
 \hypersetup{ 
     pdfauthor={}, 
-    pdftitle={SV 1919 Osterburken e.V. Mitgliedsantrag (Stand 02.2026)}, 
+    pdftitle={SV 1919 Osterburken e.V. Mitgliedsantrag (Stand 02/2026)}, 
     pdfcreator={LaTeX}, 
-    pdfproducer={pdfLaTeX}
+    pdfproducer={Latex with eforms}
 }
+
+\newlength{\editheight}
+\setlength{\editheight}{0.90cm}
+
 \input{macros.tex}
 
 \definecolor{svoblau}{RGB}{24,47,149}
+
+\newcommand{\singleAdultColor}{Cyan}
+\newcommand{\singleChildColor}{LimeGreen}
+\newcommand{\familyColor}{YellowOrange}
 
 \input{eventhandler.js}
 
@@ -33,13 +42,13 @@
 
 
 \begin{document}
-\begin{Form}[NeedAppearances=true]
+\begin{Form}[NeedAppearances=false]
 
 \begin{flushleft}
     \vspace*{-1.2cm}
     \begin{minipage}{0.8\textwidth}
         {\Huge\bfseries\textcolor{svoblau}{SV~1919~Osterburken~e.V.}}
-        \\[1ex]{\Large AUFNAHMEANTRAG (Stand 02.2026) \hfill Seite \thepage}
+        \\[1ex]{\Large AUFNAHMEANTRAG (Stand 02/2026) \hfill Seite \thepage}
         \\[4ex]
         Hiermit beantrage ich die Mitgliedschaft beim SV~1919~Osterburken~e.V..
     \end{minipage}
@@ -70,23 +79,23 @@
     keystroke={selectMemberType("memberType");},
     bordercolor={0 0 0}
 ]{}{=E}} &
-\makecell[cl]{Mitgliedschaft für mich (ab 18 Jahre alt) (69,- Euro/Jahr)}\\[2ex]
+\makecell[cl]{\bfseries \textcolor{\singleAdultColor}{Mitgliedschaft für mich (ab 18 Jahre alt) (69,- Euro/Jahr)}}\\[2ex]
 \makecell[cl]{\ChoiceMenu[
     name=radioMitgliedschaft,
     radio, radiosymbol=\ding{108},
     keystroke={selectMemberType("memberType");},
     bordercolor={0 0 0}
 ]{}{=K}} &
-\makecell[cl]{Mitgliedschaft für mein Kind (bis 17 Jahre alt) (59,- Euro/Jahr)\\
-\bfseries Antragsteller/-in ist erziehungsberechtigt.}\\[2ex]
+\makecell[cl]{\bfseries \textcolor{\singleChildColor}{Mitgliedschaft für mein Kind (bis 17 Jahre alt) (59,- Euro/Jahr)}\\
+Antragsteller/-in ist erziehungsberechtigt.}\\[2ex]
 \makecell[cl]{\ChoiceMenu[
     name=radioMitgliedschaft,
     radio, radiosymbol=\ding{108},
     keystroke={selectMemberType("memberType");},
     bordercolor={0 0 0}
 ]{}{=F}} &
-\makecell[cl]{Familienmitgliedschaft für mich, Partner/Partnerin und Kinder (110,- Euro/Jahr)\\
-\bfseries Antragsteller/-in ist Familienmitglied und erziehungsberechtigt.}\\
+\makecell[cl]{\bfseries \textcolor{\familyColor}{Familienmitgliedschaft für mich, Partner/Partnerin und Kinder (110,- Euro/Jahr)}\\
+Antragsteller/-in ist Familienmitglied und erziehungsberechtigt.}\\
 \end{tabular}
 
 \noindent
@@ -109,7 +118,7 @@
 \begin{ocg}{AntragstellerAbteilung}{AntragstellerAbteilung}{true}
 \begin{tcolorbox}[
     colback=white,    % Hintergrundfarbe
-    colframe=svoblau,  % Rahmenfarbe
+    colframe=\singleAdultColor,  % Rahmenfarbe
     title={Abteilung für Antragsteller/-in als Mitglied},  % Der Titel
     fonttitle=\bfseries,     % Titel fett
     arc=1.5mm,           % Ecken (optional: arc=2mm für gerundet)
@@ -142,14 +151,14 @@ Ich bin damit einverstanden, Informationen, Einladungen etc. des Vereins per E-M
 \headermembers
 
 \begin{ocg}{MeinKind}{MeinKind}{true}
-\memberchild{Mein Kind}{Kind}{Einzelmitgliedschaft für mein Kind}
+\memberchild{Mein Kind}{Kind}{Einzelmitgliedschaft für mein Kind}{\singleChildColor}
 \end{ocg}
 
 \begin{ocg}{Familie}{Familie}{true}
 \vspace{0.5cm}
 \begin{tcolorbox}[
     colback=white,    % Hintergrundfarbe
-    colframe=svoblau,  % Rahmenfarbe
+    colframe=\familyColor,  % Rahmenfarbe
     title={Mitgliedschaft für die gesante Familie},  % Der Titel
     fonttitle=\bfseries,     % Titel fett
     arc=1.5mm,           % Ecken (optional: arc=2mm für gerundet)
@@ -175,26 +184,26 @@ Ich bin damit einverstanden, Informationen, Einladungen etc. des Vereins per E-M
 \end{ocg}
 
 \begin{ocg}{Partner}{Partner}{true}
-\member{Partner/-in}{Partner}{Familienmitgliedschaft für den/die Partner/-in}
+\member{Partner/-in}{Partner}{Familienmitgliedschaft für den/die Partner/-in}{\familyColor}
 \end{ocg}
 
 \begin{ocg}{Kind0}{Kind0}{true}
-\memberchild{1. Kind}{Kind0}{Familienmitgliedschaft für das 1. Kind}
+\memberchild{1. Kind}{Kind0}{Familienmitgliedschaft für das 1. Kind}{\familyColor}
 \end{ocg}
 
 \pagebreak
 \headermembers
 
 \begin{ocg}{Kind1}{Kind1}{true}
-\memberchild{2. Kind}{Kind1}{Familienmitgliedschaft für das 2. Kind}
+\memberchild{2. Kind}{Kind1}{Familienmitgliedschaft für das 2. Kind}{\familyColor}
 \end{ocg}
 
 \begin{ocg}{Kind2}{Kind2}{true}
-\memberchild{3. Kind}{Kind2}{Familienmitgliedschaft für das 3. Kind}
+\memberchild{3. Kind}{Kind2}{Familienmitgliedschaft für das 3. Kind}{\familyColor}
 \end{ocg}
 
 \begin{ocg}{Kind3}{Kind3}{true}
-\memberchild{4. Kind}{Kind3}{Familienmitgliedschaft für das 4. Kind}
+\memberchild{4. Kind}{Kind3}{Familienmitgliedschaft für das 4. Kind}{\familyColor}
 \end{ocg}
 
 \pagebreak
@@ -215,6 +224,7 @@ Ich bin damit einverstanden, Informationen, Einladungen etc. des Vereins per E-M
 \end{flushleft}
 
 \input{sepa.tex}
+\sepaform{true}
 
 \end{Form}
 \end{document}

@@ -178,7 +178,11 @@ function selectPayor()
         for (var k = 0; k < fieldNames.length; ++k)
         {
             const n = fieldNames[k];
-            this.getField(n + dst).value = this.getField(n + src).value;
+            srcField = this.getField(n + src);
+            if (srcField)
+            {
+                this.getField(n + dst).value = srcField.value;
+            }
         }
         if (this.getField("txtLandZahler").value == "")
         {
