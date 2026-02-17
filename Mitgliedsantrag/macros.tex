@@ -7,14 +7,14 @@
     name=txtVorname#2,
     bordercolor={0 0 0},
     width=10cm, height=\editheight
-]{}} \\[3ex]
+]{}}\\[3ex]
 \makecell[cl]{Nachname:} &
 \makecell[cl]{\TextField[
     name=txtNachname#2,
     bordercolor={0 0 0},
     width=10cm, height=\editheight
-]{}} \\[3ex]
-\makecell[cl]{Geburtsdatum:} &
+]{}}\\[3ex]
+\makecell[cl]{Geburtsdatum:\\\ifthenelse{#3 > 215}{(ab 18)}{(unter 18)}} &
 \makecell[cl]{\DateField{txtGeburtsdatum#2}{-#4}{-#3}}
 \end{tabular}
 }
@@ -154,7 +154,13 @@
 \makecell[cl]{\DateField{txtDatum#1}{-12}{12}}
 \end{tabular}\hfill
 \begin{tabular}{l}
-\makecell[cc]{\sigField[\BC{0,0,0}]{sigUnterschrift#1}{9cm}{1.8cm}\\[0.5ex]
+\makecell[cc]{\TextField[
+    name=txtUnterschrift#1,
+    fileselect,
+    borderwidth=0pt,
+    bordercolor={1 1 1},
+    width=9cm, height=1.8cm
+]{}\\[0.5ex]
 \rule{9cm}{0.4pt}\\
 \footnotesize Unterschrift}
 \end{tabular}
